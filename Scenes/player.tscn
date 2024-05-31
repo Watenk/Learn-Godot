@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://c14rrofk6elrw"]
 
 [ext_resource type="Texture2D" uid="uid://df0qmp0ojuo2n" path="res://Assets/icon.svg" id="1_i308p"]
-[ext_resource type="Script" path="res://Scripts/playerController.cs" id="1_xdkrp"]
+[ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="1_xdkrp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_23qvh"]
 
 [node name="Player" type="Area2D"]
-position = Vector2(28, 27)
 script = ExtResource("1_xdkrp")
 Speed = 400.0
+MaxHealth = 3
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -19,4 +19,4 @@ position = Vector2(0, -0.249999)
 scale = Vector2(0.152344, 0.238281)
 texture = ExtResource("1_i308p")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

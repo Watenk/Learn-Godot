@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbn66amcxmu5u"]
+
+[ext_resource type="PackedScene" uid="uid://c14rrofk6elrw" path="res://Scenes/player.tscn" id="1_5vl3y"]
+[ext_resource type="PackedScene" uid="uid://djmyjr60026u7" path="res://Scenes/bullet.tscn" id="2_viwrs"]
+
+[node name="Main" type="Node"]
+
+[node name="Player" parent="." instance=ExtResource("1_5vl3y")]
+position = Vector2(655, 342)
+BulletSpeed = 100.0
+BulletDistance = 50.0
+ShootDelay = 0.5
+Bullet = ExtResource("2_viwrs")

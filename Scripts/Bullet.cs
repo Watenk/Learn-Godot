@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Bullet : RigidBody2D, IDamageble
+public partial class Bullet : Area2D, IDamageble
 {
 	[Signal]
 	public delegate void HitEventHandler();
@@ -12,6 +12,9 @@ public partial class Bullet : RigidBody2D, IDamageble
 	public int MaxHealth { get; private set; }
 	[Export]
 	public int Health { get; private set; }
+	
+	private Vector2 direction;
+	private float speed;
 
 	public override void _Ready()
 	{
@@ -20,7 +23,13 @@ public partial class Bullet : RigidBody2D, IDamageble
 
 	public override void _Process(double delta)
 	{
-		
+		Position += direction * (float)delta * speed;
+	}
+	
+	public void Shoot(Vector2 direction, float speed)
+	{
+		this.direction = direction;
+		this.speed = speed;
 	}
 
 	public void TakeDamage(int amount)
@@ -33,7 +42,16 @@ public partial class Bullet : RigidBody2D, IDamageble
 		{
 			Health = 0;
 			EmitSignal(SignalName.Death);
+			QueueFree();
 		}
 	}
-
+	
+	private void OnBodyEntered(Node body)
+	{
+		TakeDamage(1);
+		if (body is IDamageble)
+		{
+			((IDamageble)body).TakeDamage(1);
+		}
+	}
 }
