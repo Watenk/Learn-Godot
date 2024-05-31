@@ -76,14 +76,19 @@ public partial class PlayerController : Area2D, IDamageble
 	private void UpdateMovement(float delta)
 	{
 		Vector2 velocity = Vector2.Zero;
+        Vector2 mousePosition = GetGlobalMousePosition();
+
+        Vector2 direction = (mousePosition - GlobalPosition).Normalized();
+        float angle = Mathf.Atan2(direction.Y, direction.X);
+        Rotation = angle + Mathf.Pi / 2;
 
 		if (Input.IsActionPressed("Forward"))
 		{
-			velocity.Y += 1;
+			velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 		}
 		
-		velocity = velocity.Normalized() * Speed;
-		Position += velocity * delta;
+		velocity = velocity.Normalized();
+		Position += velocity * delta * Speed;
 	}
 	
 	private void BoundsWrapping()
