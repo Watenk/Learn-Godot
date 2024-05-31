@@ -11,10 +11,14 @@ public partial class Bullet : Area2D, IDamageble
 	[Export]
 	public int MaxHealth { get; private set; }
 	[Export]
+	public float BulletSpeed { get; private set; }
+	[Export]
+	public float BulletLifetime { get; private set; }
+	
 	public int Health { get; private set; }
 	
 	private Vector2 direction;
-	private float speed;
+	private Timer lifetimeTimer;
 
 	public override void _Ready()
 	{
@@ -23,13 +27,16 @@ public partial class Bullet : Area2D, IDamageble
 
 	public override void _Process(double delta)
 	{
-		Position += direction * (float)delta * speed;
+		lifetimeTimer.Tick((float)delta);
+		Position += direction * (float)delta * BulletSpeed;
+		BoundsWrapping();
 	}
 	
-	public void Shoot(Vector2 direction, float speed)
+	public void Init(Vector2 direction)
 	{
 		this.direction = direction;
-		this.speed = speed;
+		lifetimeTimer = new Timer(BulletLifetime);
+		lifetimeTimer.OnTimer += OnEndLife;
 	}
 
 	public void TakeDamage(int amount)
@@ -53,5 +60,37 @@ public partial class Bullet : Area2D, IDamageble
 		{
 			((IDamageble)body).TakeDamage(1);
 		}
+	}
+	
+	private void BoundsWrapping()
+	{
+		Rect2 viewportRect = GetViewportRect();
+
+		if (Position.X > viewportRect.Size.X)
+		{
+			Position = new Vector2(0, Position.Y);
+		}
+		
+		else if (Position.X < 0)
+		{
+			Position = new Vector2(viewportRect.Size.X, Position.Y);
+		}
+
+		if (Position.Y> viewportRect.Size.Y)
+		{
+			Position = new Vector2(Position.X, 0);
+		}
+		
+		else if (Position.Y < 0)
+		{
+			Position = new Vector2(Position.X, viewportRect.Size.Y);
+		}
+	}
+	
+	private void OnEndLife()
+	{
+		lifetimeTimer.OnTimer -= OnEndLife;
+		EmitSignal(SignalName.Death);
+		QueueFree();
 	}
 }

@@ -13,6 +13,7 @@ public class Timer
 	public Timer(float startTime)
 	{
 		StartTime = startTime;
+		Time = StartTime;
 	}
 	
 	public virtual void Tick(float deltaTime)

@@ -17,9 +17,7 @@ public partial class PlayerController : Area2D, IDamageble
 	
 	[Category("BulletSettings")]
 	[Export]
-	public float BulletSpeed { get; private set; }
-	[Export]
-	public float BulletDistance { get; private set; }
+	public float BulletSpawnDistance { get; private set; }
 	[Export]
 	public float ShootDelay { get; private set; }
 	
@@ -40,8 +38,9 @@ public partial class PlayerController : Area2D, IDamageble
 
 	public override void _Process(double delta)
 	{
-		UpdateMovement((float)delta);
 		shootDelayTimer.Tick((float)delta);
+		UpdateMovement((float)delta);
+		BoundsWrapping();
 		
 		if (Input.IsActionPressed("Shoot"))
 		{
@@ -87,16 +86,41 @@ public partial class PlayerController : Area2D, IDamageble
 		Position += velocity * delta;
 	}
 	
+	private void BoundsWrapping()
+	{
+		Rect2 viewportRect = GetViewportRect();
+
+		if (Position.X > viewportRect.Size.X)
+		{
+			Position = new Vector2(0, Position.Y);
+		}
+		
+		else if (Position.X < 0)
+		{
+			Position = new Vector2(viewportRect.Size.X, Position.Y);
+		}
+
+		if (Position.Y> viewportRect.Size.Y)
+		{
+			Position = new Vector2(Position.X, 0);
+		}
+		
+		else if (Position.Y < 0)
+		{
+			Position = new Vector2(Position.X, viewportRect.Size.Y);
+		}
+	}
+	
 	private void ShootBulletInMouseDir()
 	{
 		Vector2 mousePosition = GetGlobalMousePosition();
 		Vector2 playerPos = GlobalPosition;
 		Vector2 direction = (mousePosition - playerPos).Normalized();
-		Vector2 spawnPos = playerPos + direction * BulletDistance;
+		Vector2 spawnPos = playerPos + direction * BulletSpawnDistance;
 		
 		Bullet bullet = Bullet.Instantiate() as Bullet;
 		bullet.Position = spawnPos;
-		bullet.Shoot(direction, BulletSpeed);
+		bullet.Init(direction);
 		GetParent().AddChild(bullet);
 	}
 }

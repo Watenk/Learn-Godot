@@ -9,6 +9,8 @@
 script = ExtResource("1_xdkrp")
 Speed = 400.0
 MaxHealth = 3
+BulletSpawnDistance = 50.0
+ShootDelay = 0.3
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

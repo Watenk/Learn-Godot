@@ -7,7 +7,4 @@
 
 [node name="Player" parent="." instance=ExtResource("1_5vl3y")]
 position = Vector2(655, 342)
-BulletSpeed = 100.0
-BulletDistance = 50.0
-ShootDelay = 0.5
 Bullet = ExtResource("2_viwrs")

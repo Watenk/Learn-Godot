@@ -8,6 +8,8 @@
 [node name="Bullet" type="Area2D"]
 script = ExtResource("1_ofi8i")
 MaxHealth = 1
+BulletSpeed = 500.0
+BulletLifetime = 0.8
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
