@@ -1,3 +1,22 @@
 [gd_scene format=3 uid="uid://crnxbtely0v28"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 514.0
+offset_top = 314.0
+offset_right = 754.0
+offset_bottom = 371.0
+theme_override_font_sizes/font_size = 41
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 585.0
+offset_top = 373.0
+offset_right = 683.0
+offset_bottom = 405.0
+text = "Score: "
+horizontal_alignment = 1
+vertical_alignment = 1

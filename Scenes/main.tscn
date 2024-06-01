@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbn66amcxmu5u"]
+[gd_scene load_steps=10 format=3 uid="uid://cbn66amcxmu5u"]
 
 [ext_resource type="Script" path="res://Scripts/ObjectManager.cs" id="1_dx51x"]
 [ext_resource type="PackedScene" uid="uid://md8vyab34bj2" path="res://Scenes/enemy.tscn" id="2_no57e"]
@@ -8,13 +8,14 @@
 [ext_resource type="PackedScene" uid="uid://dph5j4dhcdoc8" path="res://Scenes/mainMenu.tscn" id="3_c1a28"]
 [ext_resource type="PackedScene" uid="uid://3bjbdh3qrah6" path="res://Scenes/level.tscn" id="4_72db4"]
 [ext_resource type="PackedScene" uid="uid://crnxbtely0v28" path="res://Scenes/gameOver.tscn" id="6_y36kh"]
+[ext_resource type="Texture2D" uid="uid://1w7c22ajo8vr" path="res://Assets/space_dn.png" id="9_x3ynd"]
 
 [node name="Main" type="Node"]
 
 [node name="ObjectManager" type="Node" parent="."]
 script = ExtResource("1_dx51x")
-EnemyPoolSize = 10
-BulletPoolSize = 50
+EnemyPoolSize = 50
+BulletPoolSize = 200
 Enemy = ExtResource("2_no57e")
 Bullet = ExtResource("3_2qo4c")
 
@@ -25,3 +26,8 @@ GameSettingsResource = ExtResource("3_66ycd")
 MainMenu = ExtResource("3_c1a28")
 Level = ExtResource("4_72db4")
 GameOver = ExtResource("6_y36kh")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1278.0
+offset_bottom = 718.0
+texture = ExtResource("9_x3ynd")

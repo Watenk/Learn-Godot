@@ -6,11 +6,6 @@ public class MenuState : BaseState<GameManager>
 	private Button playButton;
 	private Node mainMenu;
 
-	public override void Init(Fsm<GameManager> owner, GameManager blackboard)
-	{
-		base.Init(owner, blackboard);
-	}
-
 	public override void Enter()
 	{
 		mainMenu = bb.LoadScene(bb.MainMenu);

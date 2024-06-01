@@ -7,17 +7,22 @@ public class LevelState : BaseState<GameManager>
 	
 	private PlayerController player;
 	
+	private List<Enemy> enemies = new List<Enemy>();
 	private Timer spawnEnemyTimer;
 	private Label scoreLabel;
+	private Label livesLabel;
 	
 	public override void Enter()
 	{
 		level = bb.LoadScene(bb.Level);
 		scoreLabel = level.GetNode<Label>("ScoreLabel");
 		if (scoreLabel == null) GD.PrintErr("Couldn't find ScoreLabel in level");
+		livesLabel = level.GetNode<Label>("LivesLabel");
+		if (livesLabel == null) GD.PrintErr("Couldn't find LivesLabel in level");
 		player = level.GetNode<PlayerController>("Player");
 		if (player == null) GD.PrintErr("Couldn't find Player in level");
 		player.Death += OnPlayerDeath;
+		player.Hit += OnPlayerDamaged;
 		
 		spawnEnemyTimer = new Timer(GetNewSpawnRate());
 		spawnEnemyTimer.OnTimer += OnSpawn;
@@ -32,8 +37,13 @@ public class LevelState : BaseState<GameManager>
 
 	public override void Exit()
 	{
+		foreach (Enemy enemy in enemies)
+		{
+			enemy.DeActivate();
+		}
 		spawnEnemyTimer.OnTimer -= OnSpawn;
 		player.Death -= OnPlayerDeath;
+		player.Hit -= OnPlayerDamaged;
 		level.QueueFree();
 	}
 	
@@ -53,11 +63,17 @@ public class LevelState : BaseState<GameManager>
 		enemy.PlayerResource = player.PlayerResource;
 		enemy.Position = GetEnemyPos();
 		enemy.Death += OnEnemyDeath;
+		enemies.Add(enemy);	
 	}
 	
 	private void OnPlayerDeath()
 	{
 		owner.SwitchState(typeof(GameOverState));
+	}
+	
+	private void OnPlayerDamaged()
+	{
+		livesLabel.Text = "Lives: " + player.Health;
 	}
 	
 	private void OnEnemyDeath(Enemy enemy)
@@ -67,6 +83,7 @@ public class LevelState : BaseState<GameManager>
 		enemy.Death -= OnEnemyDeath;
 		enemy.Position = Vector2.Zero;
 		bb.ObjectManager.ReturnObject(enemy);
+		enemies.Remove(enemy);
 	}
 	
 	private Vector2 GetEnemyPos()
@@ -107,7 +124,6 @@ public class LevelState : BaseState<GameManager>
 			y = Utility.RandomFloat(0.0f, screenSize.Y);
 		}
 
-		GD.Print("EnemyPos: " + new Vector2(x, y));
 		return new Vector2(x, y);
 	}
 }
