@@ -49,6 +49,8 @@ public partial class Bullet : Area2D, IDamageble
 		{
 			Health = 0;
 			EmitSignal(SignalName.Death);
+			lifetimeTimer.OnTimer -= OnEndLife;
+			Hide();
 			QueueFree();
 		}
 	}
@@ -56,10 +58,6 @@ public partial class Bullet : Area2D, IDamageble
 	private void OnBodyEntered(Node body)
 	{
 		TakeDamage(1);
-		if (body is IDamageble)
-		{
-			((IDamageble)body).TakeDamage(1);
-		}
 	}
 	
 	private void BoundsWrapping()

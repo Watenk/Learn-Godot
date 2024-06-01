@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class PlayerController : Area2D, IDamageble
+public partial class PlayerController : Area2D, IDamageble, IMovable
 {
 	[Signal]
 	public delegate void HitEventHandler();
@@ -10,6 +10,8 @@ public partial class PlayerController : Area2D, IDamageble
 	public delegate void DeathEventHandler();
 	
 	[Category("PlayerSettings")]
+	[Export]
+	public float Drag { get; private set; }
 	[Export]
 	public float Speed { get; private set; }
 	[Export]
@@ -22,9 +24,12 @@ public partial class PlayerController : Area2D, IDamageble
 	public float ShootDelay { get; private set; }
 	
 	[Export]
-	public PackedScene Bullet;
+	public PackedScene Bullet { get; private set; }
+	[Export]
+	public PlayerResource PlayerResource { get; private set; }
 	
 	public int Health { get; private set; }
+	public Vector2 Velocity { get; private set; }
 
 	private Vector2 screenSize;
 	private Timer shootDelayTimer;
@@ -67,28 +72,6 @@ public partial class PlayerController : Area2D, IDamageble
 	private void OnBodyEntered(Node2D body)
 	{
 		TakeDamage(1);
-		if (body is IDamageble)
-		{
-			((IDamageble)body).TakeDamage(1);
-		}
-	}
-	
-	private void UpdateMovement(float delta)
-	{
-		Vector2 velocity = Vector2.Zero;
-        Vector2 mousePosition = GetGlobalMousePosition();
-
-        Vector2 direction = (mousePosition - GlobalPosition).Normalized();
-        float angle = Mathf.Atan2(direction.Y, direction.X);
-        Rotation = angle + Mathf.Pi / 2;
-
-		if (Input.IsActionPressed("Forward"))
-		{
-			velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-		}
-		
-		velocity = velocity.Normalized();
-		Position += velocity * delta * Speed;
 	}
 	
 	private void BoundsWrapping()
@@ -119,13 +102,42 @@ public partial class PlayerController : Area2D, IDamageble
 	private void ShootBulletInMouseDir()
 	{
 		Vector2 mousePosition = GetGlobalMousePosition();
-		Vector2 playerPos = GlobalPosition;
-		Vector2 direction = (mousePosition - playerPos).Normalized();
-		Vector2 spawnPos = playerPos + direction * BulletSpawnDistance;
+		Vector2 direction = (mousePosition - GlobalPosition).Normalized();
+		Vector2 spawnPos = GlobalPosition + direction * BulletSpawnDistance;
 		
 		Bullet bullet = Bullet.Instantiate() as Bullet;
 		bullet.Position = spawnPos;
 		bullet.Init(direction);
 		GetParent().AddChild(bullet);
+	}
+
+	public void UpdateMovement(float delta)
+	{
+		// Rotation
+		Vector2 mousePosition = GetGlobalMousePosition();
+		Vector2 direction = (mousePosition - GlobalPosition).Normalized();
+		float angle = Mathf.Atan2(direction.Y, direction.X);
+		Rotation = angle + Mathf.Pi / 2;
+
+		// Input
+		if (Input.IsActionPressed("Forward"))
+		{
+			Velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).Normalized() * Speed * delta;
+		}
+		
+		// Drag
+		if (Velocity.Length() > 0)
+		{
+			Vector2 dragVelocity = Velocity;
+			if (Velocity.X > 0) dragVelocity.X -= Drag;
+			if (Velocity.X < 0) dragVelocity.X += Drag;
+			if (Velocity.Y > 0) dragVelocity.Y -= Drag;
+			if (Velocity.Y < 0) dragVelocity.Y += Drag;
+			Velocity = dragVelocity;
+		} 
+		
+		Position += Velocity * delta;
+		
+		PlayerResource.PlayerPos = Position;
 	}
 }

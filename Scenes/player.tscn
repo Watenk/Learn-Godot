@@ -1,16 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://c14rrofk6elrw"]
+[gd_scene load_steps=6 format=3 uid="uid://c14rrofk6elrw"]
 
 [ext_resource type="Texture2D" uid="uid://df0qmp0ojuo2n" path="res://Assets/icon.svg" id="1_i308p"]
 [ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="1_xdkrp"]
+[ext_resource type="PackedScene" uid="uid://djmyjr60026u7" path="res://Scenes/bullet.tscn" id="2_eknq6"]
+[ext_resource type="Resource" uid="uid://dei3po2b2semx" path="res://Resources/PlayerResource.tres" id="3_1ecwx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_23qvh"]
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_xdkrp")
+Drag = 1.0
 Speed = 400.0
 MaxHealth = 3
 BulletSpawnDistance = 50.0
 ShootDelay = 0.3
+Bullet = ExtResource("2_eknq6")
+PlayerResource = ExtResource("3_1ecwx")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
