@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dph5j4dhcdoc8"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="PlayButton" type="Button" parent="."]
+offset_left = 485.0
+offset_top = 457.0
+offset_right = 738.0
+offset_bottom = 557.0

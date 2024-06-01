@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Bullet : Area2D, IDamageble
+public partial class Bullet : Area2D, IDamageble, IPoolable
 {
 	[Signal]
 	public delegate void HitEventHandler();
@@ -16,7 +16,8 @@ public partial class Bullet : Area2D, IDamageble
 	public float BulletLifetime { get; private set; }
 	
 	public int Health { get; private set; }
-	
+	public bool Disabled { get; private set; }
+
 	private Vector2 direction;
 	private Timer lifetimeTimer;
 
@@ -27,6 +28,7 @@ public partial class Bullet : Area2D, IDamageble
 
 	public override void _Process(double delta)
 	{
+		if (Disabled) return;
 		lifetimeTimer.Tick((float)delta);
 		Position += direction * (float)delta * BulletSpeed;
 		BoundsWrapping();
@@ -37,6 +39,24 @@ public partial class Bullet : Area2D, IDamageble
 		this.direction = direction;
 		lifetimeTimer = new Timer(BulletLifetime);
 		lifetimeTimer.OnTimer += OnEndLife;
+	}
+	
+	public void Activate()
+	{
+		Show();
+		Disabled = false;
+		SetProcess(true);
+		SetPhysicsProcess(true);
+		SetProcessInput(true);
+	}
+
+	public void DeActivate()
+	{
+		Hide();
+		Disabled = true;
+		SetProcess(false);
+		SetPhysicsProcess(false);
+		SetProcessInput(false);
 	}
 
 	public void TakeDamage(int amount)
@@ -49,15 +69,11 @@ public partial class Bullet : Area2D, IDamageble
 		{
 			Health = 0;
 			EmitSignal(SignalName.Death);
-			lifetimeTimer.OnTimer -= OnEndLife;
-			Hide();
-			QueueFree();
 		}
 	}
 	
 	private void OnBodyEntered(Node body2D)
 	{
-		GD.Print("Bullet Collision");
 		TakeDamage(1);
 	}
 	

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://3bjbdh3qrah6"]
+
+[ext_resource type="PackedScene" uid="uid://c14rrofk6elrw" path="res://Scenes/player.tscn" id="1_d37lb"]
+
+[node name="Level" type="Node2D"]
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 4.0
+offset_top = 23.0
+offset_right = 65.0
+offset_bottom = 46.0
+text = "Score: 1"
+
+[node name="LivesLabel" type="Label" parent="."]
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 65.0
+offset_bottom = 25.0
+text = "Lives: 3"
+
+[node name="Player" parent="." instance=ExtResource("1_d37lb")]
+position = Vector2(622, 363)

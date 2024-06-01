@@ -39,6 +39,8 @@ public partial class PlayerController : Area2D, IDamageble, IMovable
 		Health = MaxHealth;
 		screenSize = GetViewportRect().Size;
 		shootDelayTimer = new Timer(ShootDelay);
+		
+		PlayerResource.Player = this;
 	}
 
 	public override void _Process(double delta)
@@ -71,7 +73,6 @@ public partial class PlayerController : Area2D, IDamageble, IMovable
 	
 	private void OnBodyEntered(Node2D body)
 	{
-		GD.Print("Player Collision");
 		TakeDamage(1);
 	}
 	
@@ -138,7 +139,5 @@ public partial class PlayerController : Area2D, IDamageble, IMovable
 		} 
 		
 		Position += Velocity * delta;
-		
-		PlayerResource.PlayerPos = Position;
 	}
 }

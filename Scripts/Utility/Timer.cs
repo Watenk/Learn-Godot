@@ -40,4 +40,9 @@ public class Timer
 		Time = StartTime;
 		running = true;
 	}
+	
+	public void SetStartTime(float startTime)
+	{
+		StartTime = startTime;
+	}
 }
