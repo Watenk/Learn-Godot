@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dph5j4dhcdoc8"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="PlayButton" type="Button" parent="."]
+offset_left = 534.0
+offset_top = 516.0
+offset_right = 693.0
+offset_bottom = 558.0
+text = "play"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 308.0
+offset_top = 245.0
+offset_right = 910.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 71
+text = "<ShooterGame>"
+horizontal_alignment = 1
+vertical_alignment = 1

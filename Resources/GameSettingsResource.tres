@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ddmjbcf6jroto"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/GameSettingsResource.cs" id="1_et6xt"]
+
+[resource]
+script = ExtResource("1_et6xt")
+BaseEnemySpawnRate = 15.0
+SpawnRateScoreMultiplier = 0.4
+SpawnRateDeviation = 5.0

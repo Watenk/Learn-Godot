@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://c14rrofk6elrw"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="1_xdkrp"]
+[ext_resource type="PackedScene" uid="uid://djmyjr60026u7" path="res://Scenes/bullet.tscn" id="2_eknq6"]
+[ext_resource type="Resource" uid="uid://dei3po2b2semx" path="res://Resources/PlayerResource.tres" id="3_1ecwx"]
+[ext_resource type="Texture2D" uid="uid://i8r4sbhij8ij" path="res://Assets/ship.png" id="4_jr8wt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_23qvh"]
+radius = 13.0
+height = 38.0
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_xdkrp")
+Drag = 1.0
+Speed = 400.0
+MaxHealth = 5
+BulletSpawnDistance = 50.0
+ShootDelay = 0.3
+Bullet = ExtResource("2_eknq6")
+PlayerResource = ExtResource("3_1ecwx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_23qvh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 3
+position = Vector2(0.5, 1.19209e-06)
+scale = Vector2(0.6, 1.22581)
+texture = ExtResource("4_jr8wt")
+metadata/_edit_group_ = true
+
+[connection signal="area_entered" from="." to="." method="OnBodyEntered"]
