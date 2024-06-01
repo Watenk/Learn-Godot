@@ -71,6 +71,7 @@ public partial class PlayerController : Area2D, IDamageble, IMovable
 	
 	private void OnBodyEntered(Node2D body)
 	{
+		GD.Print("Player Collision");
 		TakeDamage(1);
 	}
 	

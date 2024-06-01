@@ -55,8 +55,9 @@ public partial class Bullet : Area2D, IDamageble
 		}
 	}
 	
-	private void OnBodyEntered(Node body)
+	private void OnBodyEntered(Node body2D)
 	{
+		GD.Print("Bullet Collision");
 		TakeDamage(1);
 	}
 	

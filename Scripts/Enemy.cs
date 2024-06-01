@@ -63,6 +63,12 @@ public partial class Enemy : Area2D, IDamageble
 		}
 	}
 	
+	private void OnBodyEntered(Node body2D)
+	{
+		GD.Print("Enemy Collision");
+		TakeDamage(1);
+	}
+	
 	private void UpdateMovement()
 	{
 		

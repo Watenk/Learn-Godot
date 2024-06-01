@@ -24,3 +24,5 @@ shape = SubResource("CircleShape2D_bcgqk")
 position = Vector2(0.25, -9.53674e-07)
 scale = Vector2(0.105469, 0.125)
 texture = ExtResource("1_5eglp")
+
+[connection signal="area_entered" from="." to="." method="OnBodyEntered"]

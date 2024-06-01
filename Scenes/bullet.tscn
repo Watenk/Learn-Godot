@@ -9,7 +9,7 @@
 script = ExtResource("1_ofi8i")
 MaxHealth = 1
 BulletSpeed = 500.0
-BulletLifetime = 1.0
+BulletLifetime = 1.5
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -19,3 +19,5 @@ shape = SubResource("CircleShape2D_r3ui3")
 position = Vector2(0, 3.8147e-06)
 scale = Vector2(0.125, 0.117188)
 texture = ExtResource("1_ydvnq")
+
+[connection signal="area_entered" from="." to="." method="OnBodyEntered"]

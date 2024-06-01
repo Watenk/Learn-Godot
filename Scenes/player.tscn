@@ -11,7 +11,7 @@
 script = ExtResource("1_xdkrp")
 Drag = 1.0
 Speed = 400.0
-MaxHealth = 3
+MaxHealth = 5
 BulletSpawnDistance = 50.0
 ShootDelay = 0.3
 Bullet = ExtResource("2_eknq6")
@@ -26,4 +26,4 @@ position = Vector2(0, -0.249999)
 scale = Vector2(0.152344, 0.238281)
 texture = ExtResource("1_i308p")
 
-[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="area_entered" from="." to="." method="OnBodyEntered"]
