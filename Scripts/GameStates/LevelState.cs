@@ -52,7 +52,7 @@ public class LevelState : BaseState<GameManager>
 	public float GetNewSpawnRate()
 	{
 		float newSpawnRate = bb.GameSettingsResource.BaseEnemySpawnRate - (bb.GameSettingsResource.SpawnRateScoreMultiplier * bb.score) + 1 + Utility.RandomFloat(-bb.GameSettingsResource.SpawnRateDeviation, bb.GameSettingsResource.SpawnRateDeviation);
-		if (newSpawnRate < 0) newSpawnRate = 0;
+		if (newSpawnRate < 1) newSpawnRate = 1;
 		return newSpawnRate;
 	}
 	

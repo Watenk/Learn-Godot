@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_et6xt")
 BaseEnemySpawnRate = 15.0
-SpawnRateScoreMultiplier = 1.1
+SpawnRateScoreMultiplier = 0.4
 SpawnRateDeviation = 5.0
