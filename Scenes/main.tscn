@@ -28,6 +28,7 @@ Level = ExtResource("4_72db4")
 GameOver = ExtResource("6_y36kh")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+z_index = -195
 offset_right = 1278.0
 offset_bottom = 718.0
 texture = ExtResource("9_x3ynd")

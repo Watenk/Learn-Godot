@@ -118,14 +118,29 @@ public partial class PlayerController : Area2D, IDamageble, IMovable
 		// Rotation
 		Vector2 mousePosition = GetGlobalMousePosition();
 		Vector2 direction = (mousePosition - GlobalPosition).Normalized();
-		float angle = Mathf.Atan2(direction.Y, direction.X);
-		Rotation = angle + Mathf.Pi / 2;
-
+		float rotationAngle = Mathf.Atan2(direction.Y, direction.X);
+		Rotation = rotationAngle + Mathf.Pi / 2;
+		
+		Vector2 newVelocity = Vector2.Zero;
 		// Input
-		if (Input.IsActionPressed("Forward"))
+		if (Input.IsActionPressed("Up"))
 		{
-			Velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).Normalized() * Speed * delta;
+			newVelocity.Y -= 1;
 		}
+		if (Input.IsActionPressed("Right"))
+		{
+			newVelocity.X += 1;
+		}
+		if (Input.IsActionPressed("Left"))
+		{
+			newVelocity.X -= 1;
+		}
+		if (Input.IsActionPressed("Down"))
+		{
+			newVelocity.Y += 1;
+		}
+		newVelocity.Normalized();
+		Velocity += newVelocity * Speed * delta;
 		
 		// Drag
 		if (Velocity.Length() > 0)

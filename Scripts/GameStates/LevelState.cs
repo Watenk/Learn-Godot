@@ -24,6 +24,8 @@ public class LevelState : BaseState<GameManager>
 		player.Death += OnPlayerDeath;
 		player.Hit += OnPlayerDamaged;
 		
+		bb.score = 1;
+		
 		spawnEnemyTimer = new Timer(GetNewSpawnRate());
 		spawnEnemyTimer.OnTimer += OnSpawn;
 		
